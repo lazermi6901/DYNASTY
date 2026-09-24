@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#111711"><link rel="manifest" href="manifest.webmanifest">
+<title>DYNASTY</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;height:100%;overflow:hidden;background:#0b100d;color:#f3ead1;font-family:Georgia,serif;touch-action:manipulation}
+button{font:inherit;color:inherit}.app{height:100dvh;display:flex;flex-direction:column;background:radial-gradient(circle at 50% 0,#25311e,#0b100d 55%)}
+header{padding:max(12px,env(safe-area-inset-top)) 14px 9px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #5c5135;background:#101610eF;z-index:5}
+.logo{font-weight:900;letter-spacing:4px;font-size:21px;color:#e8c56d}.rank{font-size:11px;color:#a99d7d}
+.resources{display:flex;gap:7px;font:700 12px system-ui}.pill{background:#1d241b;border:1px solid #4b503c;border-radius:20px;padding:7px 9px}
+main{position:relative;flex:1;overflow:hidden}.screen{display:none;height:100%;overflow:auto;padding:14px 14px 100px}.screen.active{display:block}
+#world{padding:0;overflow:hidden}.map{position:absolute;width:1600px;height:1200px;left:50%;top:50%;transform:translate(-50%,-50%) scale(.72);transform-origin:center;background:
+radial-gradient(ellipse at 24% 25%,#466139 0 12%,transparent 13%),
+radial-gradient(ellipse at 72% 22%,#d8e1dc 0 10%,#63705f 11% 15%,transparent 16%),
+radial-gradient(ellipse at 73% 72%,#72412b 0 13%,#36251e 14% 18%,transparent 19%),
+radial-gradient(ellipse at 28% 74%,#7b6d37 0 14%,transparent 15%),
+radial-gradient(ellipse at 48% 48%,#68804a 0 35%,#45613d 36% 49%,#294735 50% 61%,transparent 62%),
+linear-gradient(#173b4c,#24647b);border-radius:44%;box-shadow:0 0 90px #000 inset}
+.map:after{content:"";position:absolute;inset:0;border-radius:44%;background:repeating-radial-gradient(circle at 50% 50%,transparent 0 80px,#ffffff06 82px 84px);pointer-events:none}
+.river{position:absolute;width:650px;height:500px;left:450px;top:260px;border:22px solid transparent;border-left-color:#2f7893;border-radius:50%;transform:rotate(20deg);opacity:.85}
+.place{position:absolute;transform:translate(-50%,-50%);border:0;background:none;text-align:center;text-shadow:0 2px 4px #000;filter:drop-shadow(0 3px 3px #000);cursor:pointer}.place b{display:block;font-size:36px}.place span{white-space:nowrap;background:#121712d9;border:1px solid #9c824b;border-radius:14px;padding:6px 10px;font-size:15px}.capital b{font-size:55px}.capital span{color:#f4cf72;border-color:#d3ad51}
+.cloud{position:absolute;font-size:70px;opacity:.14;animation:cloud 35s linear infinite;pointer-events:none}@keyframes cloud{from{transform:translateX(-200px)}to{transform:translateX(1700px)}}
+.hud{position:absolute;top:12px;left:12px;right:12px;display:flex;justify-content:space-between;pointer-events:none}.hud>*{pointer-events:auto}.mapbtn{border:1px solid #776b48;background:#111911dd;border-radius:12px;padding:9px 12px}
+.card{background:linear-gradient(145deg,#1b241b,#111711);border:1px solid #554b34;border-radius:16px;padding:14px;margin-bottom:11px;box-shadow:0 8px 20px #0005}.card h3{margin:0 0 7px;color:#e7c46c}.sub{color:#a99d7d;font:13px system-ui}
+.action{border:1px solid #967a3d;background:linear-gradient(#695527,#443719);border-radius:12px;padding:10px 13px;font-weight:800}.action:disabled{opacity:.4}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.big{font-size:27px;font-weight:900;color:#f1ce72}
+nav{position:absolute;z-index:10;bottom:0;left:0;right:0;padding:8px 8px max(8px,env(safe-area-inset-bottom));display:grid;grid-template-columns:repeat(5,1fr);background:#0d130ff5;border-top:1px solid #5b5138;backdrop-filter:blur(15px)}
+nav button{border:0;background:none;color:#928b75;padding:7px 2px;font:10px system-ui}nav button i{font-style:normal;display:block;font-size:22px;margin-bottom:3px}nav button.on{color:#f0cc6d;transform:translateY(-2px)}
+.modal{position:absolute;z-index:20;left:12px;right:12px;bottom:90px;background:#131b14f5;border:1px solid #9b824b;border-radius:18px;padding:16px;box-shadow:0 10px 50px #000;display:none}.modal.show{display:block}.modal h2{margin:0;color:#f1cc70}
+.progress{height:8px;background:#080b09;border-radius:9px;overflow:hidden;margin:8px 0}.progress i{display:block;height:100%;background:#c29a45}
+</style></head>
+<body><div class="app">
+<header><div><div class="logo">DYNASTY</div><div class="rank">Maison d'Aster • Âge I</div></div><div class="resources"><div class="pill">🪙 <span id="gold">0</span></div><div class="pill">🪵 <span id="wood">0</span></div><div class="pill">🪨 <span id="stone">0</span></div></div></header>
+<main>
+<section id="world" class="screen active">
+<div class="map" id="map"><div class="river"></div><div class="cloud" style="top:120px">☁️　☁️</div>
+<button class="place capital" style="left:50%;top:49%" data-name="Asterhold" data-biome="Capitale impériale" data-icon="🏰"><b>🏰</b><span>Asterhold</span></button>
+<button class="place" style="left:27%;top:27%" data-name="Sylve d'Emeraude" data-biome="Forêt ancestrale" data-icon="🌲"><b>🌲</b><span>Sylve d'Emeraude</span></button>
+<button class="place" style="left:72%;top:20%" data-name="Pics du Géant" data-biome="Montagnes glacées" data-icon="🏔️"><b>🏔️</b><span>Pics du Géant</span></button>
+<button class="place" style="left:25%;top:73%" data-name="Sables d'Or" data-biome="Désert ancien" data-icon="🏜️"><b>🏜️</b><span>Sables d'Or</span></button>
+<button class="place" style="left:75%;top:72%" data-name="Cendreval" data-biome="Terres volcaniques" data-icon="🌋"><b>🌋</b><span>Cendreval</span></button>
+<button class="place" style="left:15%;top:49%" data-name="Marais de Mornebrume" data-biome="Marécages" data-icon="🐊"><b>🐊</b><span>Mornebrume</span></button>
+<button class="place" style="left:57%;top:29%" data-name="Ruines d'Elyr" data-biome="Forêt enchantée" data-icon="✨"><b>✨</b><span>Ruines d'Elyr</span></button>
+<button class="place" style="left:87%;top:43%" data-name="Îles de Vaelor" data-biome="Archipel" data-icon="🏝️"><b>🏝️</b><span>Îles de Vaelor</span></button>
+</div><div class="hud"><button class="mapbtn" id="minus">−</button><button class="mapbtn" id="plus">＋</button></div></section>
+<section id="kingdom" class="screen"><h2>🏰 Royaume</h2><p class="sub">Développe Asterhold pour alimenter ta dynastie.</p><div id="buildings"></div></section>
+<section id="army" class="screen"><h2>⚔️ Armée</h2><div class="card"><h3>Garde d'Aster</h3><div class="row"><span>🛡️ Soldats</span><b id="soldiers">0</b></div><p class="sub">Recrute des soldats pour préparer les futures conquêtes.</p><button class="action" id="recruit">Recruter • 🪙 120</button></div></section>
+<section id="heroes" class="screen"><h2>🧙 Héros</h2><div class="card"><h3>Sir Aldren</h3><p>⚔️ Chevalier • Commun</p><div class="progress"><i style="width:35%"></i></div><span class="sub">Le premier protecteur de ta maison.</span></div><div class="card"><h3>🔒 Elyra l'Arcaniste</h3><p class="sub">Débloquée à Château niveau 5.</p></div></section>
+<section id="dynasty" class="screen"><h2>👑 Dynastie</h2><div class="card"><h3>Maison d'Aster</h3><div class="big" id="power">1</div><span class="sub">Puissance du royaume</span></div><div class="card"><h3>Nouvelle Dynastie</h3><p class="sub">Le prestige sera accessible lorsque ton empire aura atteint l'Âge II.</p><button class="action" disabled>👑 Fonder une nouvelle dynastie</button></div></section>
+<div class="modal" id="modal"><div class="row"><div><h2 id="mname"></h2><p class="sub" id="mbiome"></p></div><button class="mapbtn" id="close">✕</button></div><p id="mdesc"></p><button class="action" id="explore">Explorer • 🪙 75</button></div>
+</main>
+<nav><button class="on" data-go="world"><i>🗺️</i>Monde</button><button data-go="kingdom"><i>🏰</i>Royaume</button><button data-go="army"><i>⚔️</i>Armée</button><button data-go="heroes"><i>🧙</i>Héros</button><button data-go="dynasty"><i>👑</i>Dynastie</button></nav>
+</div>
+<script>
+const defaults={gold:350,wood:120,stone:80,soldiers:3,last:Date.now(),levels:{farm:1,lumber:1,quarry:1,market:1,forge:0,castle:1},explored:{}};
+let s;try{s={...defaults,...JSON.parse(localStorage.DYNASTY||"{}")};s.levels={...defaults.levels,...s.levels}}catch(e){s=structuredClone(defaults)}
+const defs={farm:["🌾","Ferme","gold",1,70],lumber:["🪓","Scierie","wood",1,85],quarry:["⛏️","Carrière","stone",1,95],market:["🏪","Marché","gold",3,160],forge:["🔥","Forge","gold",5,350],castle:["🏰","Château","gold",0,500]};
+function fmt(n){return Math.floor(n).toLocaleString("fr-FR")}
+function rate(k){let d=defs[k];return s.levels[k]*d[3]}
+function render(){gold.textContent=fmt(s.gold);wood.textContent=fmt(s.wood);stone.textContent=fmt(s.stone);soldiers.textContent=s.soldiers;
+power.textContent=Object.values(s.levels).reduce((a,b)=>a+b,0)*10+s.soldiers*3;
+buildings.innerHTML=Object.entries(defs).map(([k,d])=>{let l=s.levels[k],cost=Math.floor(d[4]*Math.pow(1.55,l));return `<div class="card"><div class="row"><div><h3>${d[0]} ${d[1]}</h3><span class="sub">Niveau ${l} • +${rate(k)}/${d[2]=="gold"?"🪙":"min"}</span></div><button class="action" onclick="upgrade('${k}',${cost})">Améliorer<br>🪙 ${cost}</button></div></div>`}).join("")}
+function upgrade(k,c){if(s.gold<c)return;s.gold-=c;s.levels[k]++;render();save()}
+function save(){s.last=Date.now();localStorage.DYNASTY=JSON.stringify(s)}
+let elapsed=Math.min((Date.now()-s.last)/1000,8*3600);s.gold+=elapsed*(rate("farm")+rate("market")+rate("forge"))/10;s.wood+=elapsed*rate("lumber")/10;s.stone+=elapsed*rate("quarry")/10;
+setInterval(()=>{s.gold+=(rate("farm")+rate("market")+rate("forge"))/10;s.wood+=rate("lumber")/10;s.stone+=rate("quarry")/10;render()},1000);setInterval(save,5000);
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll(".screen").forEach(x=>x.classList.remove("active"));document.getElementById(b.dataset.go).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("on"));b.classList.add("on")});
+recruit.onclick=()=>{if(s.gold>=120){s.gold-=120;s.soldiers++;render();save()}};
+let scale=.72,px=0,py=0,drag=false,sx=0,sy=0;const mp=document.getElementById("map");function tr(){mp.style.transform=`translate(calc(-50% + ${px}px),calc(-50% + ${py}px)) scale(${scale})`}
+plus.onclick=()=>{scale=Math.min(1.3,scale+.12);tr()};minus.onclick=()=>{scale=Math.max(.45,scale-.12);tr()};
+world.addEventListener("pointerdown",e=>{drag=true;sx=e.clientX-px;sy=e.clientY-py});world.addEventListener("pointermove",e=>{if(drag){px=e.clientX-sx;py=e.clientY-sy;tr()}});world.addEventListener("pointerup",()=>drag=false);
+let selected="";document.querySelectorAll(".place").forEach(p=>p.onclick=e=>{e.stopPropagation();selected=p.dataset.name;mname.textContent=p.dataset.icon+" "+selected;mbiome.textContent=p.dataset.biome;mdesc.textContent=s.explored[selected]?"Cette région a déjà été explorée par ta dynastie.":"Les chroniqueurs de la cour connaissent encore peu cette région. Envoie des éclaireurs pour lever le brouillard.";explore.textContent=s.explored[selected]?"✓ Région explorée":"Explorer • 🪙 75";modal.classList.add("show")});
+close.onclick=()=>modal.classList.remove("show");explore.onclick=()=>{if(!s.explored[selected]&&s.gold>=75){s.gold-=75;s.explored[selected]=1;render();save();explore.textContent="✓ Région explorée"}};
+render();window.addEventListener("beforeunload",save);
+</script></body></html>
