@@ -1,0 +1,1 @@
+export const CONFIG={saveKey:"chronicles_p1",playerSpeed:9,worldSize:150};

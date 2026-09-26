@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111b19"><title>DYNASTY — Val-des-Brumes</title>
+<link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"}}</script>
+</head>
+<body><main id="app">
+<div id="world" aria-label="Monde 3D interactif"></div>
+<header class="hud-head"><div class="brand"><span class="brand-mark">✦</span><div><b>DYNASTY</b><small>VAL-DES-BRUMES · PHASE 1</small></div></div><button class="head-action" id="camera-home" type="button" aria-label="Recentrer la caméra">◎</button></header>
+<div class="tip">Touchez le terrain pour marcher <span>·</span> Glissez pour tourner la vue</div>
+<button class="quest-pill" id="quest-pill" type="button" hidden><span>QUÊTE PRINCIPALE</span><strong id="quest-label"></strong></button>
+<button class="npc-prompt" id="npc-prompt" type="button" hidden></button>
+<div class="location"><span class="location-dot"></span><span>Val-des-Brumes</span><span class="location-coords" id="coords">0, 12</span></div>
+<nav class="dock" aria-label="Navigation du jeu">
+<button class="dock-button" type="button" data-panel="map"><span class="dock-icon">◇</span><span>Carte</span></button>
+<button class="dock-button" type="button" data-panel="inventory"><span class="dock-icon">▦</span><span>Sac</span></button>
+<button class="dock-button" type="button" data-panel="shop"><span class="dock-icon">✧</span><span>Boutique</span></button>
+<button class="dock-button" type="button" data-panel="menu"><span class="dock-icon">☷</span><span>Menu</span></button>
+</nav>
+<div class="scrim" id="scrim" hidden></div>
+<div class="start-screen" id="start-screen"><div class="start-art"><span>✦</span></div><div class="start-card"><small>LE VAL VOUS ATTEND</small><h1>DYNASTY</h1><p>Une première aventure dans Val-des-Brumes.</p><div id="start-profile"></div><button id="play-button" type="button" class="action">Jouer</button><button id="create-button" type="button" class="action secondary">Créer un personnage</button></div></div>
+<section class="character-creator" id="character-creator" role="dialog" aria-modal="true" aria-labelledby="create-title" hidden><div class="creator-card"><button class="creator-back" id="creator-back" type="button" aria-label="Retour">×</button><small>NOUVEAU VOYAGEUR</small><h2 id="create-title">Créer un personnage</h2><label for="character-name">Nom</label><input id="character-name" maxlength="16" autocomplete="off" placeholder="Votre nom"><p class="creator-caption">De 2 à 16 caractères. Un seul personnage est conservé sur cet appareil.</p><div class="creator-label">Choisissez une silhouette</div><div class="appearance-options" id="appearance-options"></div><p class="creator-error" id="creator-error" role="alert"></p><button class="action" id="confirm-character" type="button">Commencer l’aventure</button></div></section>
+<section class="dialogue" id="dialogue" role="dialog" aria-modal="true" aria-labelledby="npc-name" hidden><div class="dialogue-card"><div class="dialogue-head"><div><small>HABITANT DU VAL</small><h2 id="npc-name"></h2></div><button id="dialogue-close" type="button" aria-label="Fermer">×</button></div><p id="npc-response" aria-live="polite"></p><div class="dialogue-choices" id="dialogue-choices"></div><form id="npc-question-form"><label for="npc-question">Poser une question</label><div><input id="npc-question" maxlength="90" placeholder="Par exemple : où est la carte ?"><button type="submit">Demander</button></div></form><small class="dialogue-note">Réponses contextuelles locales, sans connexion à un modèle génératif.</small></div></section>
+<section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden>
+<div class="sheet-top"><div><div class="eyebrow" id="sheet-kicker"></div><h1 id="sheet-title"></h1></div><button class="close" id="close-panel" type="button" aria-label="Fermer">×</button></div>
+<div class="sheet-body" id="sheet-body"></div>
+</section></main><script type="module" src="./src/main.js"></script></body></html>

@@ -1,0 +1,1 @@
+import {CONFIG} from "./Config.js";export class Save{load(){try{return JSON.parse(localStorage.getItem(CONFIG.saveKey))||null}catch{return null}}write(data){localStorage.setItem(CONFIG.saveKey,JSON.stringify(data))}}
